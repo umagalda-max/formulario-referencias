@@ -4,38 +4,36 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Formulario de Referencias Laborales - Grupo INNPA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --card-bg: rgba(255,255,255,0.6); /* Más transparente */
-      --input-bg: #e0f2ff;
-      --accent: #2563eb;
-      --muted: #6b7280;
+      --accent:#2563eb;
+      --muted:#6b7280;
+      --card-bg: rgba(255,255,255,0.85); /* Semi-transparente */
     }
 
     body {
-      font-family: 'Roboto', sans-serif;
-      background: url('https://raw.githubusercontent.com/umagalda-max/formulario-referencias/main/WhatsApp%20Image%202025-10-15%20at%201.18.55%20PM.jpeg') no-repeat center center fixed;
+      font-family: 'Inter', Arial, sans-serif;
+      margin:0;
+      padding:0;
+      background: url('https://raw.githubusercontent.com/umagalda-max/formulario-referencias/main/fondo.jpeg') no-repeat center center fixed;
       background-size: cover;
-      margin: 0;
-      padding: 36px;
     }
 
     .container {
       max-width: 800px;
-      margin: auto;
+      margin: 36px auto;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 12px;
       padding: 24px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* Sombra más marcada */
-      backdrop-filter: blur(5px); /* Efecto de desenfoque para fondo */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
 
     h1 {
-      font-size: 26px;
+      font-size: 24px;
       margin-bottom: 8px;
       color: #111;
     }
@@ -46,60 +44,53 @@
     }
 
     label {
-      display: block;
-      font-weight: 500;
-      margin: 12px 0 6px;
+      display:block;
+      font-weight:500;
+      margin:12px 0 6px;
     }
 
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      background: var(--input-bg);
+    input,textarea,select {
+      width:100%;
+      padding:10px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      font-size:14px;
     }
 
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
+    textarea { min-height:90px; resize:vertical; }
 
     button {
       background: var(--accent);
-      color: #fff;
-      border: 0;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
+      color:#fff;
+      border:0;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
     }
 
     button.secondary {
-      background: #e5e7eb;
-      color: #111;
+      background:#e5e7eb;
+      color:#111;
     }
 
-    .note {
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .note { font-size:13px; color:var(--muted); }
 
     .success {
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-      color: #065f46;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 12px;
+      background:#ecfdf5;
+      border:1px solid #bbf7d0;
+      color:#065f46;
+      padding:10px;
+      border-radius:8px;
+      margin-top:12px;
     }
 
     .error {
-      background: #fff1f2;
-      border: 1px solid #fecdd3;
-      color: #831843;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 12px;
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      color:#831843;
+      padding:10px;
+      border-radius:8px;
+      margin-top:12px;
     }
   </style>
 </head>
@@ -107,10 +98,10 @@
   <div class="container">
     <div class="card">
       <h1>Formulario de Referencia Laboral - Grupo INNPA</h1>
-      <p class="lead">Completa la siguiente información para entregar una referencia sobre el/la postulante.</p>
+      <p class="lead">Completa la información para entregar una referencia sobre el/la postulante.</p>
 
       <form id="refForm">
-        <label for="nombre">1. Indique su nombre y apellido *</label>
+        <label for="nombre">1. Nombre y apellido *</label>
         <input id="nombre" name="nombre" type="text" required>
 
         <label for="cargo">2. Cargo en periodo de Supervisión</label>
@@ -122,28 +113,28 @@
         <label for="periodo">4. Periodo de Supervisión</label>
         <input id="periodo" name="periodo" type="text" placeholder="Ej: Enero 2020 - Marzo 2022">
 
-        <label for="funciones">5. ¿Qué cargo desempeñaba la persona en la empresa y cuáles eran sus funciones?</label>
+        <label for="funciones">5. Cargo y funciones del postulante</label>
         <textarea id="funciones" name="funciones"></textarea>
 
-        <label for="tiempo">6. ¿Cuánto tiempo alcanzó a trabajar en la empresa?</label>
+        <label for="tiempo">6. Tiempo trabajado en la empresa</label>
         <input id="tiempo" name="tiempo" type="text" placeholder="Ej: 2 años">
 
-        <label for="desempeno">7. ¿Cómo fue su desempeño en términos de responsabilidad, asistencia y compromiso?</label>
+        <label for="desempeno">7. Desempeño (responsabilidad, asistencia, compromiso)</label>
         <textarea id="desempeno" name="desempeno"></textarea>
 
-        <label for="fortalezas">8. ¿Cuáles podrían ser sus fortalezas y sus espacios de mejora?</label>
+        <label for="fortalezas">8. Fortalezas y espacios de mejora</label>
         <textarea id="fortalezas" name="fortalezas"></textarea>
 
-        <label for="conducta">9. ¿Cómo describiría la conducta del postulante, en términos preventivos y de salud ocupacional?</label>
+        <label for="conducta">9. Conducta (preventiva y salud ocupacional)</label>
         <textarea id="conducta" name="conducta"></textarea>
 
-        <label for="salida">10. ¿Cuál fue el motivo de su salida? ¿Volvería a trabajar con él/ella?</label>
+        <label for="salida">10. Motivo de salida y ¿volvería a trabajar con él/ella?</label>
         <textarea id="salida" name="salida"></textarea>
 
-        <label for="relacion">11. ¿Cómo fue la relación con sus pares y jefaturas?</label>
+        <label for="relacion">11. Relación con pares y jefaturas</label>
         <textarea id="relacion" name="relacion"></textarea>
 
-        <label for="nota">12. En resumen, desde lo visualizado con anterioridad, ¿qué nota le pondría del 1 al 7? Especifique su respuesta.</label>
+        <label for="nota">12. Nota final del 1 al 7</label>
         <textarea id="nota" name="nota"></textarea>
 
         <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
@@ -181,17 +172,14 @@
           resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
           form.reset();
         } else {
-          resultArea.innerHTML = `<div class="error">Ocurrió un error: ${json.message}</div>`;
+          resultArea.innerHTML = '<div class="error">Ocurrió un error al enviar. Intenta más tarde.</div>';
         }
       } catch (err) {
         resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
       }
     });
 
-    resetBtn.addEventListener('click', () => {
-      form.reset(); 
-      resultArea.innerHTML='';
-    });
+    resetBtn.addEventListener('click', () => { form.reset(); resultArea.innerHTML=''; });
   </script>
 </body>
 </html>
