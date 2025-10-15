@@ -6,75 +6,108 @@
   <title>Formulario de Referencias Laborales - Grupo INNPA</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#f6f8fa;
-      --card:#ffffffcc; /* tarjeta con transparencia */
-      --accent:#2563eb;
-      --muted:#6b7280;
-      --input-bg:#e0f0ff; /* celeste para inputs */
+    :root {
+      --card-bg: rgba(255,255,255,0.6); /* Más transparente */
+      --input-bg: #e0f2ff;
+      --accent: #2563eb;
+      --muted: #6b7280;
     }
 
-    body{
+    body {
       font-family: 'Roboto', sans-serif;
-      background: url('https://drive.google.com/uc?export=view&id=1aGs4pi-ugdKBN5qTXtTO9gf0CcO00n6t') no-repeat center center fixed;
+      background: url('https://raw.githubusercontent.com/umagalda-max/formulario-referencias/main/WhatsApp%20Image%202025-10-15%20at%201.18.55%20PM.jpeg') no-repeat center center fixed;
       background-size: cover;
       margin: 0;
       padding: 36px;
     }
 
-    .container{
-      max-width:800px;
-      margin:auto;
-      position: relative;
-      z-index: 1;
+    .container {
+      max-width: 800px;
+      margin: auto;
     }
 
-    .card{
-      position: relative;
-      background: var(--card);
-      border-radius:12px;
-      padding:24px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
-      overflow: hidden;
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* Sombra más marcada */
+      backdrop-filter: blur(5px); /* Efecto de desenfoque para fondo */
     }
 
-    .card::before {
-      content:"";
-      position:absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(255,255,255,0.85); /* overlay semitransparente */
-      z-index:0;
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #111;
     }
 
-    .card *{
-      position: relative;
-      z-index:1;
+    p.lead {
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
-    h1{font-size:22px;margin-bottom:8px}
-    p.lead{color:var(--muted);margin-bottom:20px}
-    label{display:block;font-weight:500;margin:12px 0 6px}
-    input,textarea,select{
-      width:100%;
-      padding:10px;
-      border:1px solid #d1d5db;
-      border-radius:8px;
-      font-size:14px;
+    label {
+      display: block;
+      font-weight: 500;
+      margin: 12px 0 6px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
       background: var(--input-bg);
     }
-    textarea{min-height:90px;resize:vertical}
-    button{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
-    button.secondary{background:#e5e7eb;color:#111}
-    .note{font-size:13px;color:var(--muted)}
-    .success{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:12px}
-    .error{background:#fff1f2;border:1px solid #fecdd3;color:#831843;padding:10px;border-radius:8px;margin-top:12px}
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #e5e7eb;
+      color: #111;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .success {
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      color: #065f46;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .error {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #831843;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="card">
-      <h1>Formulario de Referencia Laboral</h1>
-      <p class="lead">Completa la información para entregar una referencia sobre el/la postulante.</p>
+      <h1>Formulario de Referencia Laboral - Grupo INNPA</h1>
+      <p class="lead">Completa la siguiente información para entregar una referencia sobre el/la postulante.</p>
 
       <form id="refForm">
         <label for="nombre">1. Indique su nombre y apellido *</label>
@@ -110,7 +143,7 @@
         <label for="relacion">11. ¿Cómo fue la relación con sus pares y jefaturas?</label>
         <textarea id="relacion" name="relacion"></textarea>
 
-        <label for="nota">12. En resumen, ¿qué nota le pondría del 1 al 7? Especifique su respuesta.</label>
+        <label for="nota">12. En resumen, desde lo visualizado con anterioridad, ¿qué nota le pondría del 1 al 7? Especifique su respuesta.</label>
         <textarea id="nota" name="nota"></textarea>
 
         <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
@@ -119,7 +152,7 @@
         </div>
 
         <div id="resultArea"></div>
-        <p class="note">La información será utilizada solo con fines de verificación laboral.</p>
+        <p class="note">La información entregada será utilizada solo con fines de verificación laboral.</p>
       </form>
     </div>
   </div>
@@ -148,14 +181,17 @@
           resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
           form.reset();
         } else {
-          resultArea.innerHTML = '<div class="error">Ocurrió un error al enviar. Intenta más tarde.</div>';
+          resultArea.innerHTML = `<div class="error">Ocurrió un error: ${json.message}</div>`;
         }
       } catch (err) {
         resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
       }
     });
 
-    resetBtn.addEventListener('click', () => {form.reset(); resultArea.innerHTML='';});
+    resetBtn.addEventListener('click', () => {
+      form.reset(); 
+      resultArea.innerHTML='';
+    });
   </script>
 </body>
 </html>
