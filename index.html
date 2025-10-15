@@ -1,130 +1,161 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Formulario de Referencias Laborales</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario de Referencias Laborales - Grupo INNPA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f5f7fa;
-      --card: #ffffff;
-      --accent: #1f4e79;
-      --accent-hover: #16385b;
-      --muted: #6b7280;
-      --border: #d1d5db;
+    :root{
+      --bg:#f6f8fa;
+      --card:#ffffffcc; /* tarjeta con transparencia */
+      --accent:#2563eb;
+      --muted:#6b7280;
+      --input-bg:#e0f0ff; /* celeste para inputs */
     }
 
-    * {box-sizing: border-box; margin:0; padding:0;}
-    body {
-      font-family: 'Inter', Arial, sans-serif;
-      background: var(--bg);
-      color: #111;
-      padding: 40px 20px;
+    body{
+      font-family: 'Roboto', sans-serif;
+      background: url('https://drive.google.com/uc?export=view&id=1aGs4pi-ugdKBN5qTXtTO9gf0CcO00n6t') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 36px;
     }
 
-    .container {max-width: 800px; margin: auto;}
-    .card {
+    .container{
+      max-width:800px;
+      margin:auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card{
+      position: relative;
       background: var(--card);
-      border-radius: 16px;
-      padding: 32px 40px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border-top: 6px solid var(--accent);
+      border-radius:12px;
+      padding:24px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
 
-    h1 {font-size: 26px; font-weight: 600; margin-bottom: 8px; color: var(--accent);}
-    p.lead {font-size: 15px; color: var(--muted); margin-bottom: 24px;}
-
-    label {display: block; font-weight: 500; margin: 16px 0 6px;}
-    input, textarea {width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px;}
-    textarea {min-height: 100px; resize: vertical;}
-
-    .buttons {margin-top: 24px; display: flex; gap: 12px; align-items: center;}
-    button {
-      background: var(--accent);
-      color: #fff;
-      border: 0;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.2s;
+    .card::before {
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(255,255,255,0.85); /* overlay semitransparente */
+      z-index:0;
     }
-    button:hover {background: var(--accent-hover);}
-    button.secondary {background: #e5e7eb; color: #111;}
 
-    .note {font-size: 13px; color: var(--muted); margin-top: 12px;}
-    .success {background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:12px;}
-    .error {background:#fff1f2;border:1px solid #fecdd3;color:#831843;padding:10px;border-radius:8px;margin-top:12px;}
+    .card *{
+      position: relative;
+      z-index:1;
+    }
+
+    h1{font-size:22px;margin-bottom:8px}
+    p.lead{color:var(--muted);margin-bottom:20px}
+    label{display:block;font-weight:500;margin:12px 0 6px}
+    input,textarea,select{
+      width:100%;
+      padding:10px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      font-size:14px;
+      background: var(--input-bg);
+    }
+    textarea{min-height:90px;resize:vertical}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#e5e7eb;color:#111}
+    .note{font-size:13px;color:var(--muted)}
+    .success{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:12px}
+    .error{background:#fff1f2;border:1px solid #fecdd3;color:#831843;padding:10px;border-radius:8px;margin-top:12px}
   </style>
 </head>
 <body>
   <div class="container">
     <div class="card">
-      <h1>Referencia Laboral</h1>
-      <p class="lead">Completa la información sobre el/la postulante.</p>
+      <h1>Formulario de Referencia Laboral</h1>
+      <p class="lead">Completa la información para entregar una referencia sobre el/la postulante.</p>
 
-      <!-- FORMULARIO CLÁSICO QUE EVITA CORS -->
-      <form id="refForm" method="POST" action="https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec" target="hidden_iframe">
-        <label>1. Nombre y apellido *</label>
-        <input name="nombre" type="text" required>
+      <form id="refForm">
+        <label for="nombre">1. Indique su nombre y apellido *</label>
+        <input id="nombre" name="nombre" type="text" required>
 
-        <label>2. Cargo en periodo de Supervisión</label>
-        <input name="cargo" type="text">
+        <label for="cargo">2. Cargo en periodo de Supervisión</label>
+        <input id="cargo" name="cargo" type="text">
 
-        <label>3. Empresa en periodo de Supervisión</label>
-        <input name="empresa" type="text">
+        <label for="empresa">3. Empresa en periodo de Supervisión</label>
+        <input id="empresa" name="empresa" type="text">
 
-        <label>4. Periodo de Supervisión</label>
-        <input name="periodo" type="text" placeholder="Ej: Enero 2020 - Marzo 2022">
+        <label for="periodo">4. Periodo de Supervisión</label>
+        <input id="periodo" name="periodo" type="text" placeholder="Ej: Enero 2020 - Marzo 2022">
 
-        <label>5. Cargo y funciones de la persona</label>
-        <textarea name="funciones"></textarea>
+        <label for="funciones">5. ¿Qué cargo desempeñaba la persona en la empresa y cuáles eran sus funciones?</label>
+        <textarea id="funciones" name="funciones"></textarea>
 
-        <label>6. Tiempo trabajado en la empresa</label>
-        <input name="tiempo" type="text" placeholder="Ej: 2 años">
+        <label for="tiempo">6. ¿Cuánto tiempo alcanzó a trabajar en la empresa?</label>
+        <input id="tiempo" name="tiempo" type="text" placeholder="Ej: 2 años">
 
-        <label>7. Desempeño (responsabilidad, asistencia, compromiso)</label>
-        <textarea name="desempeno"></textarea>
+        <label for="desempeno">7. ¿Cómo fue su desempeño en términos de responsabilidad, asistencia y compromiso?</label>
+        <textarea id="desempeno" name="desempeno"></textarea>
 
-        <label>8. Fortalezas y espacios de mejora</label>
-        <textarea name="fortalezas"></textarea>
+        <label for="fortalezas">8. ¿Cuáles podrían ser sus fortalezas y sus espacios de mejora?</label>
+        <textarea id="fortalezas" name="fortalezas"></textarea>
 
-        <label>9. Conducta (preventiva y salud ocupacional)</label>
-        <textarea name="conducta"></textarea>
+        <label for="conducta">9. ¿Cómo describiría la conducta del postulante, en términos preventivos y de salud ocupacional?</label>
+        <textarea id="conducta" name="conducta"></textarea>
 
-        <label>10. Motivo de salida / volvería a trabajar con él/ella</label>
-        <textarea name="salida"></textarea>
+        <label for="salida">10. ¿Cuál fue el motivo de su salida? ¿Volvería a trabajar con él/ella?</label>
+        <textarea id="salida" name="salida"></textarea>
 
-        <label>11. Relación con pares y jefaturas</label>
-        <textarea name="relacion"></textarea>
+        <label for="relacion">11. ¿Cómo fue la relación con sus pares y jefaturas?</label>
+        <textarea id="relacion" name="relacion"></textarea>
 
-        <label>12. Nota del 1 al 7 y comentario</label>
-        <textarea name="nota"></textarea>
+        <label for="nota">12. En resumen, ¿qué nota le pondría del 1 al 7? Especifique su respuesta.</label>
+        <textarea id="nota" name="nota"></textarea>
 
-        <div class="buttons">
-          <button type="submit">Enviar</button>
-          <button type="button" class="secondary" onclick="refForm.reset();">Limpiar</button>
+        <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
+          <button type="submit">Enviar referencia</button>
+          <button type="button" class="secondary" id="resetBtn">Limpiar</button>
         </div>
-      </form>
 
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-      <p class="note">La información será usada solo con fines de verificación laboral.</p>
+        <div id="resultArea"></div>
+        <p class="note">La información será utilizada solo con fines de verificación laboral.</p>
+      </form>
     </div>
   </div>
 
   <script>
-    // Mensaje temporal de éxito
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec";
     const form = document.getElementById('refForm');
-    const iframe = document.getElementById('hidden_iframe');
-    iframe.onload = function() {
-      if(form.dataset.submitted == "true"){
-        alert("¡Gracias! Tu referencia fue enviada correctamente.");
-        form.reset();
-        form.dataset.submitted = "false";
+    const resultArea = document.getElementById('resultArea');
+    const resetBtn = document.getElementById('resetBtn');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      resultArea.innerHTML = '';
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const resp = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+
+        const json = await resp.json();
+        if (json.success) {
+          resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
+          form.reset();
+        } else {
+          resultArea.innerHTML = '<div class="error">Ocurrió un error al enviar. Intenta más tarde.</div>';
+        }
+      } catch (err) {
+        resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
       }
-    }
-    form.addEventListener('submit', function(){ form.dataset.submitted = "true"; });
+    });
+
+    resetBtn.addEventListener('click', () => {form.reset(); resultArea.innerHTML='';});
   </script>
 </body>
 </html>
