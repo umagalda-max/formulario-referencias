@@ -85,7 +85,7 @@
     const resetBtn = document.getElementById('resetBtn');
 
     function submitDone() {
-      // Solo se muestra el mensaje de éxito si hay datos en el formulario
+      // Solo se muestra el mensaje de éxito si el formulario tiene datos
       if (form.checkValidity()) {
         resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
         form.reset();
