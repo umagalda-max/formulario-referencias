@@ -76,7 +76,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = '1akIWII_l6vTmKtnuqm3OSbitcox5Uw6iwSruDHPK8V4';
+    const SCRIPT_URL = https://script.google.com/macros/s/AKfycbxA44Vgrgtn9bVnTVOLnnJQ-ELSRdkhMX3-KaN3JkI4zanLat7RI5qUnj4YIukc0xlD/exec;
     const form = document.getElementById('refForm');
     const resultArea = document.getElementById('resultArea');
     const resetBtn = document.getElementById('resetBtn');
@@ -137,3 +137,6 @@
   -->
 </body>
 </html>
+function doGet(e) {
+  return ContentService.createTextOutput("Google Apps Script conectado correctamente.");
+}
