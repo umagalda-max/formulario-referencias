@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario de Referencias Laborales</title>
+  <style>
+    :root{--bg:#f6f8fa;--card:#fff;--accent:#2563eb;--muted:#6b7280}
+    body{font-family:Inter,Arial,sans-serif;background:var(--bg);margin:0;padding:36px;}
+    .container{max-width:800px;margin:auto}
+    .card{background:var(--card);border-radius:12px;padding:24px;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+    h1{font-size:22px;margin-bottom:8px}
+    p.lead{color:var(--muted);margin-bottom:20px}
+    label{display:block;font-weight:500;margin:12px 0 6px}
+    input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;font-size:14px}
+    textarea{min-height:90px;resize:vertical}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#e5e7eb;color:#111}
+    .note{font-size:13px;color:var(--muted)}
+    .success{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:12px}
+    .error{background:#fff1f2;border:1px solid #fecdd3;color:#831843;padding:10px;border-radius:8px;margin-top:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Formulario de Referencia Laboral</h1>
+      <p class="lead">Completa la siguiente información para entregar una referencia sobre el/la postulante.</p>
+
+      <form id="refForm">
+        <label for="nombre">1. Indique su nombre y apellido *</label>
+        <input id="nombre" name="nombre" type="text" required>
+
+        <label for="cargo">2. Cargo en periodo de Supervisión</label>
+        <input id="cargo" name="cargo" type="text">
+
+        <label for="empresa">3. Empresa en periodo de Supervisión</label>
+        <input id="empresa" name="empresa" type="text">
+
+        <label for="periodo">4. Periodo de Supervisión</label>
+        <input id="periodo" name="periodo" type="text" placeholder="Ej: Enero 2020 - Marzo 2022">
+
+        <label for="funciones">5. ¿Qué cargo desempeñaba la persona en la empresa y cuáles eran sus funciones?</label>
+        <textarea id="funciones" name="funciones"></textarea>
+
+        <label for="tiempo">6. ¿Cuánto tiempo alcanzó a trabajar en la empresa?</label>
+        <input id="tiempo" name="tiempo" type="text" placeholder="Ej: 2 años">
+
+        <label for="desempeno">7. ¿Cómo fue su desempeño en términos de responsabilidad, asistencia y compromiso?</label>
+        <textarea id="desempeno" name="desempeno"></textarea>
+
+        <label for="fortalezas">8. ¿Cuáles podrían ser sus fortalezas y sus espacios de mejora?</label>
+        <textarea id="fortalezas" name="fortalezas"></textarea>
+
+        <label for="conducta">9. ¿Cómo describiría la conducta del postulante, en términos preventivos y de salud ocupacional?</label>
+        <textarea id="conducta" name="conducta"></textarea>
+
+        <label for="salida">10. ¿Cuál fue el motivo de su salida? ¿Volvería a trabajar con él/ella?</label>
+        <textarea id="salida" name="salida"></textarea>
+
+        <label for="relacion">11. ¿Cómo fue la relación con sus pares y jefaturas?</label>
+        <textarea id="relacion" name="relacion"></textarea>
+
+        <label for="nota">12. En resumen, desde lo visualizado con anterioridad, ¿qué nota le pondría del 1 al 7? Especifique su respuesta.</label>
+        <textarea id="nota" name="nota"></textarea>
+
+        <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
+          <button type="submit">Enviar referencia</button>
+          <button type="button" class="secondary" id="resetBtn">Limpiar</button>
+        </div>
+
+        <div id="resultArea"></div>
+        <p class="note">La información entregada será utilizada solo con fines de verificación laboral.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = '1akIWII_l6vTmKtnuqm3OSbitcox5Uw6iwSruDHPK8V4';
+    const form = document.getElementById('refForm');
+    const resultArea = document.getElementById('resultArea');
+    const resetBtn = document.getElementById('resetBtn');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      resultArea.innerHTML = '';
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        if (SCRIPT_URL === 'REPLACE_WITH_YOUR_SCRIPT_URL') throw new Error('Falta configurar la URL de Apps Script');
+
+        const resp = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+
+        const json = await resp.json();
+        if (json.success) {
+          resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
+          form.reset();
+        } else {
+          resultArea.innerHTML = '<div class="error">Ocurrió un error al enviar. Intenta más tarde.</div>';
+        }
+      } catch (err) {
+        resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {form.reset(); resultArea.innerHTML='';});
+  </script>
+
+  <!-- INSTRUCCIONES GOOGLE SHEETS -->
+  <!--
+    1) Crea una Google Sheet y nombra la hoja "Respuestas".
+    2) En https://script.google.com crea un proyecto y pega:
+
+       function doPost(e){
+         try{
+           var data = JSON.parse(e.postData.contents);
+           var ss = SpreadsheetApp.openById('REPLACE_WITH_SHEET_ID');
+           var sheet = ss.getSheetByName('Respuestas');
+           sheet.appendRow([
+             new Date(), data.nombre, data.cargo, data.empresa, data.periodo,
+             data.funciones, data.tiempo, data.desempeno, data.fortalezas,
+             data.conducta, data.salida, data.relacion, data.nota
+           ]);
+           return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
+         } catch(err){
+           return ContentService.createTextOutput(JSON.stringify({success:false,message:err.message})).setMimeType(ContentService.MimeType.JSON);
+         }
+       }
+
+    3) Reemplaza el ID de tu hoja y despliega como Web App (acceso: "Anyone").
+    4) Pega la URL en la constante SCRIPT_URL.
+  -->
+</body>
+</html>
