@@ -27,7 +27,8 @@
       <h1>Formulario de Referencia Laboral</h1>
       <p class="lead">Completa la siguiente información para entregar una referencia sobre el/la postulante.</p>
 
-      <form id="refForm">
+      <!-- FORMULARIO ACTUALIZADO -->
+      <form action="https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec" method="post" target="hidden_iframe" id="refForm">
         <label for="nombre">1. Indique su nombre y apellido *</label>
         <input id="nombre" name="nombre" type="text" required>
 
@@ -72,68 +73,26 @@
         <div id="resultArea"></div>
         <p class="note">La información entregada será utilizada solo con fines de verificación laboral.</p>
       </form>
+
+      <!-- IFRAME OCULTO PARA ENVIOS -->
+      <iframe name="hidden_iframe" style="display:none;" onload="submitDone()"></iframe>
     </div>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec";
     const form = document.getElementById('refForm');
     const resultArea = document.getElementById('resultArea');
     const resetBtn = document.getElementById('resetBtn');
 
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      resultArea.innerHTML = '';
-
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      try {
-        if (SCRIPT_URL === 'REPLACE_WITH_YOUR_SCRIPT_URL') throw new Error('Falta configurar la URL de Apps Script');
-
-        const resp = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        });
-
-        const json = await resp.json();
-        if (json.success) {
-          resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
-          form.reset();
-        } else {
-          resultArea.innerHTML = '<div class="error">Ocurrió un error al enviar. Intenta más tarde.</div>';
-        }
-      } catch (err) {
-        resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
+    function submitDone() {
+      // Solo se muestra el mensaje de éxito si hay datos en el formulario
+      if (form.checkValidity()) {
+        resultArea.innerHTML = '<div class="success">Gracias, tu referencia fue enviada correctamente.</div>';
+        form.reset();
       }
-    });
+    }
 
     resetBtn.addEventListener('click', () => {form.reset(); resultArea.innerHTML='';});
   </script>
-
-  <!-- INSTRUCCIONES GOOGLE SHEETS -->
-  <!--
-    1) Crea una Google Sheet y nombra la hoja "Respuestas".
-    2) En https://script.google.com crea un proyecto y pega:
-
-       function doPost(e){
-         try{
-           var data = JSON.parse(e.postData.contents);
-           var ss = SpreadsheetApp.openById('REPLACE_WITH_SHEET_ID');
-           var sheet = ss.getSheetByName('Respuestas');
-           sheet.appendRow([
-             new Date(), data.nombre, data.cargo, data.empresa, data.periodo,
-             data.funciones, data.tiempo, data.desempeno, data.fortalezas,
-             data.conducta, data.salida, data.relacion, data.nota
-           ]);
-           return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
-         } catch(err){
-           return ContentService.createTextOutput(JSON.stringify({success:false,message:err.message})).setMimeType(ContentService.MimeType.JSON);
-         }
-       }
-
-    3) Reemplaza el ID de tu hoja y despliega como Web App (acceso: "Anyone").
-    4) Pega la URL en la constante SCRIPT_URL.
-  -->
 </body>
 </html>
