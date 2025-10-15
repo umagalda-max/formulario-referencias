@@ -6,7 +6,6 @@
   <title>Formulario de Referencias Laborales</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* --- Variables de color corporativo --- */
     :root {
       --bg: #f5f7fa;
       --card: #ffffff;
@@ -16,7 +15,6 @@
       --border: #d1d5db;
     }
 
-    /* --- Reset básico --- */
     * {box-sizing: border-box; margin:0; padding:0;}
     body {
       font-family: 'Inter', Arial, sans-serif;
@@ -25,10 +23,7 @@
       padding: 40px 20px;
     }
 
-    /* --- Contenedor centrado --- */
     .container {max-width: 800px; margin: auto;}
-
-    /* --- Tarjeta principal --- */
     .card {
       background: var(--card);
       border-radius: 16px;
@@ -37,38 +32,13 @@
       border-top: 6px solid var(--accent);
     }
 
-    h1 {
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--accent);
-    }
+    h1 {font-size: 26px; font-weight: 600; margin-bottom: 8px; color: var(--accent);}
+    p.lead {font-size: 15px; color: var(--muted); margin-bottom: 24px;}
 
-    p.lead {
-      font-size: 15px;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    /* --- Formularios --- */
-    label {
-      display: block;
-      font-weight: 500;
-      margin: 16px 0 6px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: 'Inter', Arial, sans-serif;
-    }
-
+    label {display: block; font-weight: 500; margin: 16px 0 6px;}
+    input, textarea {width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px;}
     textarea {min-height: 100px; resize: vertical;}
 
-    /* --- Botones --- */
     .buttons {margin-top: 24px; display: flex; gap: 12px; align-items: center;}
     button {
       background: var(--accent);
@@ -81,24 +51,21 @@
       transition: background 0.2s;
     }
     button:hover {background: var(--accent-hover);}
-    button.secondary {
-      background: #e5e7eb;
-      color: #111;
-    }
+    button.secondary {background: #e5e7eb; color: #111;}
 
-    /* --- Mensajes --- */
     .note {font-size: 13px; color: var(--muted); margin-top: 12px;}
     .success {background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:12px;}
     .error {background:#fff1f2;border:1px solid #fecdd3;color:#831843;padding:10px;border-radius:8px;margin-top:12px;}
-
   </style>
 </head>
 <body>
   <div class="container">
     <div class="card">
       <h1>Referencia Laboral</h1>
-      <p class="lead">Por favor, completa la información sobre el/la postulante.</p>
-      <form id="refForm">
+      <p class="lead">Completa la información sobre el/la postulante.</p>
+
+      <!-- FORMULARIO CLÁSICO QUE EVITA CORS -->
+      <form id="refForm" method="POST" action="https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec" target="hidden_iframe">
         <label>1. Nombre y apellido *</label>
         <input name="nombre" type="text" required>
 
@@ -137,46 +104,27 @@
 
         <div class="buttons">
           <button type="submit">Enviar</button>
-          <button type="button" class="secondary" id="resetBtn">Limpiar</button>
+          <button type="button" class="secondary" onclick="refForm.reset();">Limpiar</button>
         </div>
-
-        <div id="resultArea"></div>
-        <p class="note">La información será usada solo con fines de verificación laboral.</p>
       </form>
+
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+      <p class="note">La información será usada solo con fines de verificación laboral.</p>
     </div>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwimR1NVcTbghRyI_6-CwJv_PMF7llNIvqga45-H5XZPREFg7uzVwEcnIipS1vysf1w/exec";
+    // Mensaje temporal de éxito
     const form = document.getElementById('refForm');
-    const resultArea = document.getElementById('resultArea');
-    const resetBtn = document.getElementById('resetBtn');
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      resultArea.innerHTML = '';
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      try {
-        const resp = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        });
-
-        const json = await resp.json();
-        if(json.success){
-          resultArea.innerHTML = '<div class="success">¡Gracias! Tu referencia fue enviada correctamente.</div>';
-          form.reset();
-        } else {
-          resultArea.innerHTML = `<div class="error">Error: ${json.message}</div>`;
-        }
-      } catch(err){
-        resultArea.innerHTML = `<div class='error'>Error: ${err.message}</div>`;
+    const iframe = document.getElementById('hidden_iframe');
+    iframe.onload = function() {
+      if(form.dataset.submitted == "true"){
+        alert("¡Gracias! Tu referencia fue enviada correctamente.");
+        form.reset();
+        form.dataset.submitted = "false";
       }
-    });
-
-    resetBtn.addEventListener('click', () => { form.reset(); resultArea.innerHTML=''; });
+    }
+    form.addEventListener('submit', function(){ form.dataset.submitted = "true"; });
   </script>
 </body>
 </html>
